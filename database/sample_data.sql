@@ -537,7 +537,9 @@ INSERT INTO analytics_events (
 ('job', 'f47ac10b-58cc-4372-a567-0e02b2c3d479', 'view', '550e8400-e29b-41d4-a716-446655440001', '192.168.1.2', 'PE', 'mobile'),
 ('company', '6ba7b810-9dad-11d1-80b4-00c04fd430c8', 'view', '550e8400-e29b-41d4-a716-446655440002', '10.0.0.2', 'ES', 'desktop');
 
--- Update view counts based on analytics
+-- Update view counts based on analytics (disable triggers temporarily)
+SET session_replication_role = replica;
+
 UPDATE portfolios SET total_views = (
     SELECT COUNT(*) FROM analytics_events 
     WHERE entity_type = 'portfolio' AND entity_id = portfolios.id AND event_type = 'view'
@@ -552,3 +554,6 @@ UPDATE companies SET total_views = (
     SELECT COUNT(*) FROM analytics_events 
     WHERE entity_type = 'company' AND entity_id = companies.id AND event_type = 'view'
 );
+
+-- Re-enable triggers
+SET session_replication_role = DEFAULT;
