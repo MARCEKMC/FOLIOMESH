@@ -1,5 +1,5 @@
 -- =====================================================
--- FOLIOMESH SAMPLE DATA - FIXED UUIDS
+-- FOLIOMESH SAMPLE DATA
 -- Test data for development and testing
 -- =====================================================
 
@@ -136,8 +136,8 @@ INSERT INTO portfolios (
 ) VALUES 
 -- Kevin's portfolio (free user)
 (
-    '123e4567-e89b-12d3-a456-426614174001',
-    '550e8400-e29b-41d4-a716-446655440001',
+    'p1111111-1111-1111-1111-111111111111',
+    '11111111-1111-1111-1111-111111111111',
     true,
     'published',
     'Portafolio de Kevin Mendoza',
@@ -148,8 +148,8 @@ INSERT INTO portfolios (
 ),
 -- María's portfolio (free user)
 (
-    '123e4567-e89b-12d3-a456-426614174002',
-    '550e8400-e29b-41d4-a716-446655440002',
+    'p2222222-2222-2222-2222-222222222222',
+    '22222222-2222-2222-2222-222222222222',
     true,
     'published',
     'Portfolio de María García',
@@ -160,8 +160,8 @@ INSERT INTO portfolios (
 ),
 -- Carlos's portfolios (premium user - multiple)
 (
-    '123e4567-e89b-12d3-a456-426614174003',
-    '550e8400-e29b-41d4-a716-446655440003',
+    'p3333333-3333-3333-3333-333333333333',
+    '33333333-3333-3333-3333-333333333333',
     true,
     'published',
     'Carlos Rodríguez - Full Stack',
@@ -171,8 +171,8 @@ INSERT INTO portfolios (
     324
 ),
 (
-    '123e4567-e89b-12d3-a456-426614174004',
-    '550e8400-e29b-41d4-a716-446655440003',
+    'p3333334-3333-3333-3333-333333333333',
+    '33333333-3333-3333-3333-333333333333',
     false,
     'draft',
     'Proyectos Personales',
@@ -188,7 +188,7 @@ INSERT INTO portfolio_sections (
 ) VALUES 
 -- Kevin's "About" section
 (
-    '123e4567-e89b-12d3-a456-426614174001',
+    'p1111111-1111-1111-1111-111111111111',
     'about',
     'text_description',
     1,
@@ -211,7 +211,7 @@ INSERT INTO portfolio_sections (
 ),
 -- Carlos's "About" section with 3D avatar
 (
-    '123e4567-e89b-12d3-a456-426614174003',
+    'p3333333-3333-3333-3333-333333333333',
     'about',
     'interactive_3d',
     1,
@@ -238,7 +238,7 @@ INSERT INTO portfolio_sections (
             "description": "Full stack developer with over 5 years of experience. Specialized in scalable architectures and modern technologies."
         },
         "fr": {
-            "description": "Développeur full stack avec plus de 5 ans d expérience. Spécialisé dans les architectures évolutives et les technologies modernes."
+            "description": "Développeur full stack avec plus de 5 ans d''expérience. Spécialisé dans les architectures évolutives et les technologies modernes."
         }
     }'
 );
@@ -248,7 +248,7 @@ INSERT INTO portfolio_sections (
     portfolio_id, section_type, design_variant, position_order, content
 ) VALUES 
 (
-    '123e4567-e89b-12d3-a456-426614174001',
+    'p1111111-1111-1111-1111-111111111111',
     'experience',
     'timeline_vertical',
     2,
@@ -279,7 +279,7 @@ INSERT INTO portfolio_sections (
     portfolio_id, section_type, design_variant, position_order, content
 ) VALUES 
 (
-    '123e4567-e89b-12d3-a456-426614174003',
+    'p3333333-3333-3333-3333-333333333333',
     'projects',
     'project_cards',
     3,
@@ -310,7 +310,7 @@ INSERT INTO portfolio_sections (
     portfolio_id, section_type, design_variant, position_order, content
 ) VALUES 
 (
-    '123e4567-e89b-12d3-a456-426614174002',
+    'p2222222-2222-2222-2222-222222222222',
     'skills',
     'hexagon_skills',
     2,
@@ -334,6 +334,36 @@ INSERT INTO portfolio_sections (
     }'
 );
 
+-- Insert sample posts
+INSERT INTO posts (
+    id, author_type, author_user_id, content_type, text_content, 
+    shared_portfolio_id, likes_count, comments_count, views_count
+) VALUES 
+-- User sharing portfolio
+(
+    's1111111-1111-1111-1111-111111111111',
+    'user',
+    '11111111-1111-1111-1111-111111111111',
+    'portfolio_share',
+    '¡Acabo de actualizar mi portafolio! Incluye mis últimos proyectos en React y TypeScript. ¿Qué les parece? 🚀',
+    'p1111111-1111-1111-1111-111111111111',
+    12,
+    3,
+    156
+),
+-- Company post
+(
+    's2222222-2222-2222-2222-222222222222',
+    'company',
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+    'company_post',
+    'Estamos creciendo nuestro equipo de desarrollo. Buscamos desarrolladores apasionados que quieran trabajar con las últimas tecnologías. ¡Únete a TechCorp! 💪',
+    null,
+    28,
+    7,
+    445
+);
+
 -- Insert sample jobs
 INSERT INTO jobs (
     id, company_id, title, description, requirements, responsibilities,
@@ -341,8 +371,8 @@ INSERT INTO jobs (
     required_languages, experience_level, applicants_count
 ) VALUES 
 (
-    'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-    '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
+    'j1111111-1111-1111-1111-111111111111',
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
     'Desarrollador Frontend Senior',
     'Únete a nuestro equipo como Desarrollador Frontend Senior. Trabajarás en proyectos innovadores usando React, TypeScript y las últimas tecnologías web.',
     'Mínimo 3 años de experiencia en React, TypeScript, HTML5, CSS3. Conocimiento en Git, testing automatizado. Inglés intermedio.',
@@ -356,8 +386,8 @@ INSERT INTO jobs (
     8
 ),
 (
-    'f47ac10b-58cc-4372-a567-0e02b2c3d480',
-    '6ba7b811-9dad-11d1-80b4-00c04fd430c8',
+    'j2222222-2222-2222-2222-222222222222',
+    'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
     'Diseñador UX/UI',
     'Buscamos un diseñador creativo para unirse a nuestro estudio. Trabajarás en proyectos variados desde branding hasta aplicaciones web.',
     'Portfolio sólido, experiencia con Figma, Adobe Creative Suite. Conocimiento en design systems y metodologías ágiles.',
@@ -371,54 +401,20 @@ INSERT INTO jobs (
     12
 );
 
--- Insert sample posts
-INSERT INTO posts (
-    id, author_type, author_user_id, author_company_id, content_type, text_content, 
-    shared_portfolio_id, job_id, likes_count, comments_count, views_count
-) VALUES 
--- User sharing portfolio
-(
-    '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
-    'user',
-    '550e8400-e29b-41d4-a716-446655440001',
-    null,
-    'portfolio_share',
-    '¡Acabo de actualizar mi portafolio! Incluye mis últimos proyectos en React y TypeScript. ¿Qué les parece? 🚀',
-    '123e4567-e89b-12d3-a456-426614174001',
-    null,
-    12,
-    3,
-    156
-),
--- Company post
-(
-    '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6e',
-    'company',
-    null,
-    '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
-    'company_post',
-    'Estamos creciendo nuestro equipo de desarrollo. Buscamos desarrolladores apasionados que quieran trabajar con las últimas tecnologías. ¡Únete a TechCorp! 💪',
-    null,
-    null,
-    28,
-    7,
-    445
-);
-
 -- Insert sample job applications
 INSERT INTO job_applications (
     job_id, user_id, status, portfolio_snapshot, user_qualifications
 ) VALUES 
 (
-    'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-    '550e8400-e29b-41d4-a716-446655440003',
+    'j1111111-1111-1111-1111-111111111111',
+    '33333333-3333-3333-3333-333333333333',
     'preselected',
     '{"portfolio_title": "Carlos Rodríguez - Full Stack", "skills": ["React", "TypeScript", "Node.js"], "experience_years": 5}',
     '{"languages": ["es", "en", "fr"], "skills": ["React", "TypeScript", "PostgreSQL"], "experience_level": "senior"}'
 ),
 (
-    'f47ac10b-58cc-4372-a567-0e02b2c3d480',
-    '550e8400-e29b-41d4-a716-446655440002',
+    'j2222222-2222-2222-2222-222222222222',
+    '22222222-2222-2222-2222-222222222222',
     'received',
     '{"portfolio_title": "Portfolio de María García", "skills": ["Figma", "Adobe Creative Suite"], "experience_years": 3}',
     '{"languages": ["es"], "skills": ["UX/UI", "Figma", "Design Thinking"], "experience_level": "mid"}'
@@ -429,15 +425,15 @@ INSERT INTO connections (
     requester_id, requested_id, status, request_message, responded_at
 ) VALUES 
 (
-    '550e8400-e29b-41d4-a716-446655440001',
-    '550e8400-e29b-41d4-a716-446655440003',
+    '11111111-1111-1111-1111-111111111111',
+    '33333333-3333-3333-3333-333333333333',
     'accepted',
     'Hola Carlos! Vi tu portafolio y me parece increíble tu experiencia. Me encantaría conectar contigo.',
     NOW() - INTERVAL '2 days'
 ),
 (
-    '550e8400-e29b-41d4-a716-446655440002',
-    '550e8400-e29b-41d4-a716-446655440004',
+    '22222222-2222-2222-2222-222222222222',
+    '44444444-4444-4444-4444-444444444444',
     'pending',
     'Hola Ana! Somos ambas del área de diseño, me gustaría conocer más sobre tu experiencia.',
     null
@@ -447,30 +443,28 @@ INSERT INTO connections (
 INSERT INTO company_follows (
     user_id, company_id, notifications_enabled
 ) VALUES 
-('550e8400-e29b-41d4-a716-446655440001', '6ba7b810-9dad-11d1-80b4-00c04fd430c8', true),
-('550e8400-e29b-41d4-a716-446655440003', '6ba7b810-9dad-11d1-80b4-00c04fd430c8', true),
-('550e8400-e29b-41d4-a716-446655440002', '6ba7b811-9dad-11d1-80b4-00c04fd430c8', true);
+('11111111-1111-1111-1111-111111111111', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', true),
+('33333333-3333-3333-3333-333333333333', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', true),
+('22222222-2222-2222-2222-222222222222', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', true);
 
 -- Insert sample messages
 INSERT INTO messages (
-    sender_type, sender_user_id, sender_company_id, receiver_user_id, content, conversation_id, is_read
+    sender_type, sender_user_id, receiver_user_id, content, conversation_id, is_read
 ) VALUES 
 (
     'user',
-    '550e8400-e29b-41d4-a716-446655440003',
-    null,
-    '550e8400-e29b-41d4-a716-446655440001',
+    '33333333-3333-3333-3333-333333333333',
+    '11111111-1111-1111-1111-111111111111',
     'Hola Kevin! Gracias por conectar. Vi que trabajas con React, yo también. ¿Te interesaría colaborar en algún proyecto?',
-    '01234567-89ab-cdef-0123-456789abcdef',
+    '11111111-3333-3333-3333-111111111111',
     true
 ),
 (
     'user',
-    '550e8400-e29b-41d4-a716-446655440001',
-    null,
-    '550e8400-e29b-41d4-a716-446655440003',
+    '11111111-1111-1111-1111-111111111111',
+    '33333333-3333-3333-3333-333333333333',
     '¡Hola Carlos! Claro, me encantaría. Estoy trabajando en un proyecto personal de e-commerce. ¿Tienes experiencia con pasarelas de pago?',
-    '01234567-89ab-cdef-0123-456789abcdef',
+    '11111111-3333-3333-3333-111111111111',
     false
 );
 
@@ -479,51 +473,51 @@ INSERT INTO notifications (
     user_id, type, title, content, related_entity_type, related_entity_id
 ) VALUES 
 (
-    '550e8400-e29b-41d4-a716-446655440001',
+    '11111111-1111-1111-1111-111111111111',
     'connection_request',
     'Nueva solicitud de conexión',
     'Carlos Rodríguez quiere conectar contigo',
     'user',
-    '550e8400-e29b-41d4-a716-446655440003'
+    '33333333-3333-3333-3333-333333333333'
 ),
 (
-    '550e8400-e29b-41d4-a716-446655440003',
+    '33333333-3333-3333-3333-333333333333',
     'job_application',
     'Aplicación actualizada',
     'Tu aplicación para Desarrollador Frontend Senior ha sido preseleccionada',
     'job',
-    'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+    'j1111111-1111-1111-1111-111111111111'
 ),
 (
-    '550e8400-e29b-41d4-a716-446655440002',
+    '22222222-2222-2222-2222-222222222222',
     'company_update',
     'Nueva oferta de trabajo',
     'Diseño Creativo ha publicado: Diseñador UX/UI',
     'job',
-    'f47ac10b-58cc-4372-a567-0e02b2c3d480'
+    'j2222222-2222-2222-2222-222222222222'
 );
 
 -- Insert sample post likes
 INSERT INTO post_likes (post_id, user_id) VALUES 
-('9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d', '550e8400-e29b-41d4-a716-446655440002'),
-('9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d', '550e8400-e29b-41d4-a716-446655440003'),
-('9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6e', '550e8400-e29b-41d4-a716-446655440001'),
-('9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6e', '550e8400-e29b-41d4-a716-446655440004');
+('s1111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222'),
+('s1111111-1111-1111-1111-111111111111', '33333333-3333-3333-3333-333333333333'),
+('s2222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111'),
+('s2222222-2222-2222-2222-222222222222', '44444444-4444-4444-4444-444444444444');
 
 -- Insert sample comments
 INSERT INTO post_comments (
     id, post_id, user_id, content
 ) VALUES 
 (
-    'fedcba98-7654-3210-fedc-ba9876543210',
-    '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
-    '550e8400-e29b-41d4-a716-446655440002',
+    'c1111111-1111-1111-1111-111111111111',
+    's1111111-1111-1111-1111-111111111111',
+    '22222222-2222-2222-2222-222222222222',
     '¡Se ve genial Kevin! Me gusta mucho el diseño limpio que usaste.'
 ),
 (
-    'fedcba98-7654-3210-fedc-ba9876543211',
-    '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
-    '550e8400-e29b-41d4-a716-446655440003',
+    'c2222222-2222-2222-2222-222222222222',
+    's1111111-1111-1111-1111-111111111111',
+    '33333333-3333-3333-3333-333333333333',
     'Buen trabajo con TypeScript. ¿Has considerado añadir tests automatizados?'
 );
 
@@ -531,11 +525,11 @@ INSERT INTO post_comments (
 INSERT INTO analytics_events (
     entity_type, entity_id, event_type, user_id, ip_address, country, device_type
 ) VALUES 
-('portfolio', '123e4567-e89b-12d3-a456-426614174001', 'view', '550e8400-e29b-41d4-a716-446655440002', '192.168.1.1', 'ES', 'desktop'),
-('portfolio', '123e4567-e89b-12d3-a456-426614174001', 'view', null, '10.0.0.1', 'PE', 'mobile'),
-('portfolio', '123e4567-e89b-12d3-a456-426614174003', 'download', '550e8400-e29b-41d4-a716-446655440004', '172.16.0.1', 'BR', 'desktop'),
-('job', 'f47ac10b-58cc-4372-a567-0e02b2c3d479', 'view', '550e8400-e29b-41d4-a716-446655440001', '192.168.1.2', 'PE', 'mobile'),
-('company', '6ba7b810-9dad-11d1-80b4-00c04fd430c8', 'view', '550e8400-e29b-41d4-a716-446655440002', '10.0.0.2', 'ES', 'desktop');
+('portfolio', 'p1111111-1111-1111-1111-111111111111', 'view', '22222222-2222-2222-2222-222222222222', '192.168.1.1', 'ES', 'desktop'),
+('portfolio', 'p1111111-1111-1111-1111-111111111111', 'view', null, '10.0.0.1', 'PE', 'mobile'),
+('portfolio', 'p3333333-3333-3333-3333-333333333333', 'download', '44444444-4444-4444-4444-444444444444', '172.16.0.1', 'BR', 'desktop'),
+('job', 'j1111111-1111-1111-1111-111111111111', 'view', '11111111-1111-1111-1111-111111111111', '192.168.1.2', 'PE', 'mobile'),
+('company', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'view', '22222222-2222-2222-2222-222222222222', '10.0.0.2', 'ES', 'desktop');
 
 -- Update view counts based on analytics
 UPDATE portfolios SET total_views = (
