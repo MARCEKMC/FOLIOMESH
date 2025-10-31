@@ -1,5 +1,5 @@
 -- =====================================================
--- FOLIOMESH DATABASE SCHEMA - FIXED DEPENDENCIES
+-- FOLIOMESH DATABASE SCHEMA
 -- Supabase PostgreSQL Database Structure
 -- =====================================================
 
@@ -210,7 +210,52 @@ CREATE TABLE portfolio_sections (
 );
 
 -- =====================================================
--- JOBS TABLE (MOVED BEFORE POSTS)
+-- POSTS TABLE
+-- =====================================================
+CREATE TABLE posts (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    
+    -- Author (either user or company)
+    author_type TEXT NOT NULL CHECK (author_type IN ('user', 'company')),
+    author_user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    author_company_id UUID REFERENCES companies(id) ON DELETE CASCADE,
+    
+    -- Content
+    content_type TEXT NOT NULL CHECK (content_type IN ('portfolio_share', 'company_post', 'job_posting')),
+    text_content TEXT NOT NULL,
+    image_urls TEXT[], -- only companies can upload images
+    
+    -- Related Content
+    shared_portfolio_id UUID REFERENCES portfolios(id) ON DELETE SET NULL,
+    job_id UUID REFERENCES jobs(id) ON DELETE SET NULL,
+    
+    -- Engagement
+    likes_count INTEGER DEFAULT 0,
+    comments_count INTEGER DEFAULT 0,
+    views_count INTEGER DEFAULT 0,
+    
+    -- Publishing
+    scheduled_at TIMESTAMP WITH TIME ZONE,
+    is_published BOOLEAN DEFAULT TRUE,
+    published_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    
+    -- Moderation
+    is_reported BOOLEAN DEFAULT FALSE,
+    report_count INTEGER DEFAULT 0,
+    is_hidden BOOLEAN DEFAULT FALSE,
+    moderated_at TIMESTAMP WITH TIME ZONE,
+    
+    -- Check constraints
+    CONSTRAINT valid_author CHECK (
+        (author_type = 'user' AND author_user_id IS NOT NULL AND author_company_id IS NULL) OR
+        (author_type = 'company' AND author_company_id IS NOT NULL AND author_user_id IS NULL)
+    )
+);
+
+-- =====================================================
+-- JOBS TABLE
 -- =====================================================
 CREATE TABLE jobs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -256,51 +301,6 @@ CREATE TABLE jobs (
     
     -- Auto-generated fields
     expires_at TIMESTAMP WITH TIME ZONE GENERATED ALWAYS AS (application_deadline) STORED
-);
-
--- =====================================================
--- POSTS TABLE (NOW AFTER JOBS)
--- =====================================================
-CREATE TABLE posts (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    
-    -- Author (either user or company)
-    author_type TEXT NOT NULL CHECK (author_type IN ('user', 'company')),
-    author_user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    author_company_id UUID REFERENCES companies(id) ON DELETE CASCADE,
-    
-    -- Content
-    content_type TEXT NOT NULL CHECK (content_type IN ('portfolio_share', 'company_post', 'job_posting')),
-    text_content TEXT NOT NULL,
-    image_urls TEXT[], -- only companies can upload images
-    
-    -- Related Content
-    shared_portfolio_id UUID REFERENCES portfolios(id) ON DELETE SET NULL,
-    job_id UUID REFERENCES jobs(id) ON DELETE SET NULL,
-    
-    -- Engagement
-    likes_count INTEGER DEFAULT 0,
-    comments_count INTEGER DEFAULT 0,
-    views_count INTEGER DEFAULT 0,
-    
-    -- Publishing
-    scheduled_at TIMESTAMP WITH TIME ZONE,
-    is_published BOOLEAN DEFAULT TRUE,
-    published_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    
-    -- Moderation
-    is_reported BOOLEAN DEFAULT FALSE,
-    report_count INTEGER DEFAULT 0,
-    is_hidden BOOLEAN DEFAULT FALSE,
-    moderated_at TIMESTAMP WITH TIME ZONE,
-    
-    -- Check constraints
-    CONSTRAINT valid_author CHECK (
-        (author_type = 'user' AND author_user_id IS NOT NULL AND author_company_id IS NULL) OR
-        (author_type = 'company' AND author_company_id IS NOT NULL AND author_user_id IS NULL)
-    )
 );
 
 -- =====================================================
